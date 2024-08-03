@@ -81,6 +81,33 @@ Queue绑定到Exchange的时候，也不需要传routingKey。ExchangeType是Fan
 1. 路由，交换机都要持久化
 2. Persistent设置为true
 
-## 消费确认
+## 消费确认  
+1. 手动确认，消费成功再从队列删除  
+~~~
+EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
+int count = 0;
+consumer.Received += (model, ea) =>
+{
+    var message = Encoding.UTF8.GetString(ea.Body.ToArray());
+    if (count < 10)
+    {
+        // 手动确认
+        channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+        Console.WriteLine($"{message}:消费成功");
+        count++;
+    }
+    else
+    {
+        //channel.BasicReject(deliveryTag: ea.DeliveryTag, requeue: true);  //这里有死循环风险，重新回写后，会触发这个方法，一直回写。不要回写
+        channel.BasicReject(deliveryTag: ea.DeliveryTag, requeue: false);  //直接删除，写到错误日志中
+        Console.WriteLine($"{message}:消费失败");
+        count++;
+    }
+};
+
+channel.BasicConsume(queue: "ErrorMessageQueue",
+    autoAck: false,   // 这个要设置为false、手动确认
+    consumer: consumer);
+~~~
 
 

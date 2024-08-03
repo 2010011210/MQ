@@ -7,9 +7,10 @@
             Console.WriteLine("Hello, World!");
             //Task.Run(() => { Consumer.Run(); });
             //Task.Run(() => { Consumer.Run2(); });
-            //Task.Run(() => { Consumer.Run3(); }); FanoutConsumerTwo
-            Task.Run(() => { Consumer.FanoutConsumerOne(); }); 
-            Task.Run(() => { Consumer.FanoutConsumerTwo(); });
+            //Task.Run(() => { Consumer.Run3(); }); 
+            //Task.Run(() => { Consumer.FanoutConsumerOne(); }); // 广播模式
+            //Task.Run(() => { Consumer.FanoutConsumerTwo(); }); //
+            Task.Run(() => { Consumer.ConfirmConsumer(); }); //ConfirmConsumer
 
             #region FanoutExchange
 
