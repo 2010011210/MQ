@@ -155,6 +155,52 @@ channel.BasicConsume(queue: "ErrorMessageQueue",
     consumer: consumer);
 ~~~
 
+## 死信队列 
+1. 假如消息被channel.BasicReject(deliveryTag: ea.DeliveryTag, requeue: false)，或者消息超时了，不要放回原来的队列，消息消费不到了。要放到死信队列中。然后从死信队列中消费  
+文档：https://www.rabbitmq.com/docs/dlx
+~~~
+ string normalQueue = "normalQueue";
+ string normalQueueExchange = "normalQueueExchange";
+ string deadLetterQueue = "DeadLetterQueue";
+ string deadLetterExchange = "DeadLetterExchange";
+ string DEAD_LETTER_EXCHANE = "x-dead-letter-exchange";
+ string DEAD_LETTER_ROUTING_KEY = "x-dead-letter-routing-key";
+
+ // 声明死信队列和交换机
+ channel.QueueDeclare(queue: deadLetterQueue, durable: true, exclusive: false, autoDelete: false, arguments: null);
+channel.ExchangeDeclare(exchange: deadLetterExchange, type: ExchangeType.Direct, durable: true, autoDelete: false, arguments: null);
+// 绑定死信队列和死信交换机
+channel.QueueBind(queue: deadLetterQueue, exchange: deadLetterExchange, routingKey: "dead_letter_test", arguments: null);
+
+// 1.声明一个队列， 队列的arguments参数需要传x-dead-letter-exchange和x-dead-letter-routing-key
+var arg = new Dictionary<string, object>();
+arg[DEAD_LETTER_EXCHANE] = deadLetterExchange;
+arg[DEAD_LETTER_ROUTING_KEY] = "dead_letter_test";
+channel.QueueDeclare(queue: normalQueue, durable: true, exclusive: false, autoDelete: false, arguments: arg);
+
+// 2.声明一个交换机
+channel.ExchangeDeclare(exchange: normalQueueExchange, type: ExchangeType.Direct, durable: true, autoDelete: false, arguments: null);
+
+// 3.队列Queue和交换机绑定
+
+channel.QueueBind(queue: normalQueue, exchange: normalQueueExchange, routingKey: "dead_letter_test", arguments: null);
+
+while (i < 100)
+{
+    string message = $"Run消息{i}";
+    byte[] body = Encoding.UTF8.GetBytes(message);
+    channel.BasicPublish(exchange: normalQueueExchange,  // 如果exchange是空，系统采用默认的exchange，推送到队列名称是routingKey这个字段赋值的名称的队列。
+                         routingKey: "dead_letter_test",
+                         basicProperties: null,
+                         body: body);
+    Console.WriteLine($"Run消息：{message}已经发送");
+    i++;
+    Thread.Sleep(500);
+}
+
+
+~~~
+
 ## 疑问 
 1. 消费端如何限流，如何一次获取多条数据 
 ~~~

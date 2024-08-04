@@ -264,6 +264,60 @@ namespace ConsumerOne
 
         #endregion
 
+        #region 死信队列消费
+
+        public static void DeadLetterConsumer()
+        {
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.HostName = "localhost";  // RabbitMQ本地运行
+            factory.UserName = "guest";  // 登录名，
+            factory.Password = "guest";  // 密码
+            using (IConnection connection = factory.CreateConnection())
+            {
+                using (IModel channel = connection.CreateModel())  //创建信道
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    // 1.声明一个队列
+                    try
+                    {
+                        EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
+                        int count = 0;
+                        consumer.Received += (model, ea) =>
+                        {
+                            var message = Encoding.UTF8.GetString(ea.Body.ToArray());
+                            if (count < 10)
+                            {
+                                // 手动确认
+                                channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+                                Console.WriteLine($"{message}:消费成功");
+                                count++;
+                            }
+                            else
+                            {
+                                //channel.BasicReject(deliveryTag: ea.DeliveryTag, requeue: true);  //这里有死循环风险，重新回写后，会触发这个方法，一直回写。不要回写
+                                channel.BasicReject(deliveryTag: ea.DeliveryTag, requeue: false);  //直接删除，写到错误日志中
+                                Console.WriteLine($"{message}:消费失败");
+                                count++;
+                            }
+                        };
+
+                        channel.BasicQos(0, 3, false);
+                        channel.BasicConsume(queue: "normalQueue",
+                            autoAck: false,   // 这个要设置为false、手动确认
+                            consumer: consumer);
+
+                        Console.ReadLine();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
 
     }
 }

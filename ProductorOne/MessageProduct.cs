@@ -49,7 +49,6 @@ namespace ProductorOne
                     }
                 }
             }
-
         }
 
         public static void Run2()
@@ -430,6 +429,64 @@ namespace ProductorOne
             }
         }
 
+
+        #endregion
+
+        #region DeadLetter  死信队列
+
+        public static void DeadLetter()
+        {
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.HostName = "localhost";  // RabbitMQ本地运行
+            factory.UserName = "guest";  // 登录名，
+            factory.Password = "guest";  // 密码
+            string normalQueue = "normalQueue";
+            string normalQueueExchange = "normalQueueExchange";
+            string deadLetterQueue = "DeadLetterQueue";
+            string deadLetterExchange = "DeadLetterExchange";
+            string DEAD_LETTER_EXCHANE = "x-dead-letter-exchange";
+            string DEAD_LETTER_ROUTING_KEY = "x-dead-letter-routing-key";
+            using (IConnection connection = factory.CreateConnection())
+            {
+                using (IModel channel = connection.CreateModel())  //创建信道
+                {
+                    channel.QueueDeclare(queue: deadLetterQueue, durable: true, exclusive: false, autoDelete: false, arguments: null);
+                    channel.ExchangeDeclare(exchange: deadLetterExchange, type: ExchangeType.Direct, durable: true, autoDelete: false, arguments: null);
+                    // 绑定死信队列和死信交换机
+                    channel.QueueBind(queue: deadLetterQueue, exchange: deadLetterExchange, routingKey: "dead_letter_test", arguments: null);
+
+                    // 1.声明一个队列
+                    var args = new Dictionary<string, object>();
+                    args[DEAD_LETTER_EXCHANE] = deadLetterExchange;
+                    args[DEAD_LETTER_ROUTING_KEY] = "dead_letter_test";
+                    args.Add("x-message-ttl", 60000);
+                    channel.QueueDeclare(queue: normalQueue, durable: true, exclusive: false, autoDelete: false, arguments: args);
+
+                    // 2.声明一个交换机
+                    channel.ExchangeDeclare(exchange: normalQueueExchange, type: ExchangeType.Direct, durable: true, autoDelete: false, arguments: null);
+
+                    // 3.队列Queue和交换机绑定
+
+                    channel.QueueBind(queue: normalQueue, exchange: normalQueueExchange, routingKey: "dead_letter_test", arguments: null);
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("生产者已经准备就绪");
+                    int i = 0;
+                    while (i < 100)
+                    {
+                        string message = $"Run消息{i}";
+                        byte[] body = Encoding.UTF8.GetBytes(message);
+                        channel.BasicPublish(exchange: normalQueueExchange,  // 如果exchange是空，系统采用默认的exchange，推送到队列名称是routingKey这个字段赋值的名称的队列。
+                                             routingKey: "dead_letter_test",
+                                             basicProperties: null,
+                                             body: body);
+                        Console.WriteLine($"Run消息：{message}已经发送");
+                        i++;
+                        Thread.Sleep(500);
+                    }
+                }
+            }
+        }
 
         #endregion
 

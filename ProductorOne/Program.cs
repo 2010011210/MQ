@@ -12,7 +12,8 @@
             //Task.Run(() => { MessageProduct.FanoutExchange(); }); 
             //Task.Run(() => { MessageProduct.TopicExchange(); }); //
             //Task.Run(() => { MessageProduct.TxRun(); }); //
-            Task.Run(() => { MessageProduct.ConfirmSelect(); }); //发送消息确认
+            // Task.Run(() => { MessageProduct.ConfirmSelect(); }); 
+            Task.Run(() => { MessageProduct.DeadLetter(); }); // 死信队列
             Console.ReadLine();
         }
     }

@@ -7,14 +7,14 @@
       "RelativeMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|solutionrelative:messageproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|d:\\github\\rabbitmq\\mq\\productorone\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{050FF0A1-B25A-401D-8717-C30A54E40842}|..\\ConsumerOne\\ConsumerOne.csproj|d:\\github\\rabbitmq\\mq\\consumerone\\consumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{050FF0A1-B25A-401D-8717-C30A54E40842}|..\\ConsumerOne\\ConsumerOne.csproj|d:\\github\\rabbitmq\\mq\\consumerone\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|d:\\github\\rabbitmq\\mq\\productorone\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|d:\\github\\rabbitmq\\mq\\productorone\\model\\logmsg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -96,26 +96,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Consumer.cs",
               "DocumentMoniker": "D:\\GitHub\\RabbitMQ\\MQ\\ConsumerOne\\Consumer.cs",
               "RelativeDocumentMoniker": "..\\ConsumerOne\\Consumer.cs",
               "ToolTip": "D:\\GitHub\\RabbitMQ\\MQ\\ConsumerOne\\Consumer.cs",
               "RelativeToolTip": "..\\ConsumerOne\\Consumer.cs",
-              "ViewState": "AQIAAKwAAAAAAAAAAAA6wOQAAAA2AAAA",
+              "ViewState": "AQIAABABAAAAAAAAAAAMwCYBAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-31T11:22:41.137Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\GitHub\\RabbitMQ\\MQ\\ConsumerOne\\Program.cs",
               "RelativeDocumentMoniker": "..\\ConsumerOne\\Program.cs",
               "ToolTip": "D:\\GitHub\\RabbitMQ\\MQ\\ConsumerOne\\Program.cs",
               "RelativeToolTip": "..\\ConsumerOne\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAADwvwwAAAAMAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvw0AAABGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-31T11:22:16.371Z",
               "EditorCaption": ""
@@ -128,20 +128,20 @@
               "RelativeDocumentMoniker": "MessageProduct.cs",
               "ToolTip": "D:\\GitHub\\RabbitMQ\\MQ\\ProductorOne\\MessageProduct.cs",
               "RelativeToolTip": "MessageProduct.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAABAAAAAMAAAA",
+              "ViewState": "AQIAAMIBAAAAAAAAAAAWwNYBAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-31T10:47:54.055Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\GitHub\\RabbitMQ\\MQ\\ProductorOne\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\GitHub\\RabbitMQ\\MQ\\ProductorOne\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAADwvw4AAAAMAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvw8AAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-31T10:46:57.765Z",
               "EditorCaption": ""

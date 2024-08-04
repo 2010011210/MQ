@@ -10,7 +10,8 @@
             //Task.Run(() => { Consumer.Run3(); }); 
             //Task.Run(() => { Consumer.FanoutConsumerOne(); }); // 广播模式
             //Task.Run(() => { Consumer.FanoutConsumerTwo(); }); //
-            Task.Run(() => { Consumer.ConfirmConsumer(); }); //ConfirmConsumer
+            Task.Run(() => { Consumer.ConfirmConsumer(); }); //
+            Task.Run(() => { Consumer.DeadLetterConsumer(); }); //死信队列
 
             #region FanoutExchange
 
