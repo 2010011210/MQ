@@ -66,8 +66,31 @@ Queue绑定到Exchange的时候，也不需要传routingKey。ExchangeType是Fan
 队列Queue绑定到Exchange的时候，ExchangeType是Topic, routingKey是一个模糊匹配的值。#是可以匹配多个单词，*是匹配一个单词。 
 
 4. Header
-和Direct有点像，不过不是根据routingKey，是根据header里面的值
+和Direct有点像，不过不是根据routingKey，是根据header里面的键值对，性能比较差，完全匹配或者匹配任意一个（根据x-match是any或者all来判断）。
+~~~
+发送消息，绑定queue和Exchange的时候
+channel.exchange_declare(exchange='my-headers-exchange', exchange_type='headers')
+channel.basic_publish(
+    exchange='my-headers-exchange',
+    routing_key='',
+    body='Hello World!',
+    properties=pika.BasicProperties(headers={'h1': 'Header1'}))
 
+接受消息
+channel.queue_bind(
+    queue='HealthQ',
+    exchange='my-headers-exchange',
+    routing_key='',
+    arguments={'x-match': 'any', 'h1': 'Header1', 'h2': 'Header2'})
+~~~
+
+## 消息的过期时间
+1. 在声明队列的时候，给x-message-ttl赋值，下面是60秒过期
+~~~
+var args = new Dictionary<string, object>();
+args.Add("x-message-ttl", 60000);
+model.QueueDeclare("myqueue", false, false, false, args);
+~~~
 
 
 ## 生产消息确认
@@ -132,4 +155,26 @@ channel.BasicConsume(queue: "ErrorMessageQueue",
     consumer: consumer);
 ~~~
 
+## 疑问 
+1. 消费端如何限流，如何一次获取多条数据 
+~~~
+basicQos(int prefetchSize, int prefetchCount, boolean global);
+prefetchSize：消息内容体允许的最大大小（以字节为单位），如果设置为0，则表示对消息内容体的大小没有限制   
+prefetchCount：服务器将推送给消费者的最大未确认消息数。这是实现限流的关键参数  
+global：此设置是否应用于整个通道（channel）上的所有消费者，而不是仅仅当前消费者。如果设置为false，则仅对当前消费者生效；如果设置为true，则对当前通道上的所有消费者生效
+
+BasicQos必须在basicConsume之前调用，否则不会生效。且basicConsume需要设置为手动确认。
+
+~~~
+2. 消费方式，有被动消费和主动拉取之分，有何区别？
+~~~
+// 主动消费
+channel.BasicConsume(queue: "OnlyProductor",
+    autoAck: true,
+    consumer: consumer);
+
+// 被动消费
+var response = channel.BasicGet(queue: "OnlyProductor", autoAck: true);  //主动拉取  
+
+~~~
 
