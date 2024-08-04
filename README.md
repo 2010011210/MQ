@@ -85,7 +85,8 @@ channel.queue_bind(
 ~~~
 
 ## 消息的过期时间
-1. 在声明队列的时候，给x-message-ttl赋值，下面是60秒过期
+1. 在声明队列的时候，给x-message-ttl赋值，下面是60秒过期,  
+文档：https://www.rabbitmq.com/docs/ttl
 ~~~
 var args = new Dictionary<string, object>();
 args.Add("x-message-ttl", 60000);
