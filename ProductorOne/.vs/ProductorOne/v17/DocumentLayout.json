@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\GitHub\\RabbitMQ\\MQ\\ProductorOne\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|d:\\github\\rabbitmq\\mq\\productorone\\messageproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|solutionrelative:messageproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{050FF0A1-B25A-401D-8717-C30A54E40842}|..\\ConsumerOne\\ConsumerOne.csproj|d:\\github\\rabbitmq\\mq\\consumerone\\consumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -11,10 +15,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|d:\\github\\rabbitmq\\mq\\productorone\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|d:\\github\\rabbitmq\\mq\\productorone\\messageproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|solutionrelative:messageproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A92215B2-6E06-414B-935D-8748B66AE0B6}|ProductorOne.csproj|d:\\github\\rabbitmq\\mq\\productorone\\model\\logmsg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -28,7 +28,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 875,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 16,
           "Children": [
             {
               "$type": "Bookmark",
@@ -96,20 +96,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Consumer.cs",
               "DocumentMoniker": "D:\\GitHub\\RabbitMQ\\MQ\\ConsumerOne\\Consumer.cs",
               "RelativeDocumentMoniker": "..\\ConsumerOne\\Consumer.cs",
               "ToolTip": "D:\\GitHub\\RabbitMQ\\MQ\\ConsumerOne\\Consumer.cs",
               "RelativeToolTip": "..\\ConsumerOne\\Consumer.cs",
-              "ViewState": "AQIAAOAAAAAAAAAAAAAAAOIAAAAYAAAA",
+              "ViewState": "AQIAAKwAAAAAAAAAAAA6wOQAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-31T11:22:41.137Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\GitHub\\RabbitMQ\\MQ\\ConsumerOne\\Program.cs",
               "RelativeDocumentMoniker": "..\\ConsumerOne\\Program.cs",
@@ -122,26 +122,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "MessageProduct.cs",
               "DocumentMoniker": "D:\\GitHub\\RabbitMQ\\MQ\\ProductorOne\\MessageProduct.cs",
               "RelativeDocumentMoniker": "MessageProduct.cs",
               "ToolTip": "D:\\GitHub\\RabbitMQ\\MQ\\ProductorOne\\MessageProduct.cs",
               "RelativeToolTip": "MessageProduct.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAJsAAABAAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABAAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-31T10:47:54.055Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\GitHub\\RabbitMQ\\MQ\\ProductorOne\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\GitHub\\RabbitMQ\\MQ\\ProductorOne\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAADwvwwAAAAxAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvw4AAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-31T10:46:57.765Z",
               "EditorCaption": ""

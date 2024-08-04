@@ -73,13 +73,35 @@ Queue绑定到Exchange的时候，也不需要传routingKey。ExchangeType是Fan
 ## 生产消息确认
 1. Tx事务模式    
 通过开启事务的方式，提交事务，保证中间环节没有问题。如果有问题，就需要抛出异常，就是让我们知道有问题
-
+~~~
+channel.TxSelect(); //开启事务
+channel.TxCommit();  // 提交事务. 多个消息一起提交
+channel.TxRollback();  //回滚事务
+~~~
 2. Confirm模式  
 生产端消息确认模式。 broker收到消息后做一个回执通知：告诉生产端，我这已经收到消息
+~~~
+channel.ConfirmSelect();
+channel.WaitForConfirms(); // 如果一个或多个消息都发送成功
+channel.WaitForConfirmsOrDie(); // 或者用这个，发送成功正常执行，发送失败，抛出异常
+
+~~~
+
 
 ## 持久化，服务停止，没有持久化的，数据会丢失
 1. 路由，交换机都要持久化
-2. Persistent设置为true
+2. 推送的时候，消息对象的basicProperties的Persistent设置为true
+~~~
+string message = $"Run消息{i}";
+byte[] body = Encoding.UTF8.GetBytes(message);
+IBasicProperties basicProperties = channel.CreateBasicProperties();
+basicProperties.Persistent = true;
+channel.BasicPublish(exchange: exchangeName,  
+                     routingKey: string.Empty,
+                     basicProperties: basicProperties,
+                     body: body);
+~~~
+
 
 ## 消费确认  
 1. 手动确认，消费成功再从队列删除  

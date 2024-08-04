@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsumerOne")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f47dc26bcdf2603ade76a4dba07545750eeb5a79")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+981b7f86f3cd56756df988dc4c21f9e861bfec0b")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsumerOne")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsumerOne")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

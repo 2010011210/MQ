@@ -307,5 +307,131 @@ namespace ProductorOne
 
         #endregion
 
+        #region 事务 TxSelect(), TxCommit(), TxRollback();
+
+        public static void TxRun()
+        {
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.HostName = "localhost";  // RabbitMQ本地运行
+            factory.UserName = "guest";  // 登录名，
+            factory.Password = "guest";  // 密码
+            string exchangeName = "MessageTxExchange";
+            string queueName = "MessageTxQueue";
+            using (IConnection connection = factory.CreateConnection())
+            {
+                using (IModel channel = connection.CreateModel())  //创建信道
+                {
+                    // 1.声明一个队列
+                    channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+
+                    // 2.声明一个交换机
+                    channel.ExchangeDeclare(exchange: exchangeName, type: ExchangeType.Direct, durable: true, autoDelete: false, arguments: null);
+
+                    // 3.队列Queue和交换机绑定
+
+                    channel.QueueBind(queue: queueName, exchange: exchangeName, routingKey: string.Empty, arguments: null);
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("生产者已经准备就绪");
+
+                    channel.TxSelect(); //开启事务
+                    for (int i = 0; i < 5; i++) 
+                    {
+                        string message = $"Run消息{i}";
+                        byte[] body = Encoding.UTF8.GetBytes(message);
+                        IBasicProperties basicProperties = channel.CreateBasicProperties();
+                        basicProperties.Persistent = true;  // 持久化，就算MQ宕机，数据也会保留，不会丢失。
+                        channel.BasicPublish(exchange: exchangeName,  
+                                             routingKey: string.Empty,
+                                             basicProperties: basicProperties,
+                                             body: body);
+                        Console.WriteLine($"Run消息：{message}已经发送");
+                        Thread.Sleep(500);
+                    }
+
+                    try
+                    {
+                        channel.TxCommit();  // 提交事务. 5个消息一起提交
+                    }
+                    catch (Exception ex) 
+                    {
+                        Console.WriteLine($"错误信息：{ex.Message}");
+                        channel.TxRollback();  //回滚事务
+                    }
+
+                }
+            }
+
+        }
+
+        #endregion
+
+        #region 消息确认模式
+        public static void ConfirmSelect() 
+        {
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.HostName = "localhost";  // RabbitMQ本地运行
+            factory.UserName = "guest";  // 登录名，
+            factory.Password = "guest";  // 密码
+            string exchangeName = "MessageTxExchange";
+            string queueName = "MessageTxQueue";
+            using (IConnection connection = factory.CreateConnection())
+            {
+                using (IModel channel = connection.CreateModel())  //创建信道
+                {
+                    // 1.声明一个队列
+                    channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+
+                    // 2.声明一个交换机
+                    channel.ExchangeDeclare(exchange: exchangeName, type: ExchangeType.Direct, durable: true, autoDelete: false, arguments: null);
+
+                    // 3.队列Queue和交换机绑定
+
+                    channel.QueueBind(queue: queueName, exchange: exchangeName, routingKey: string.Empty, arguments: null);
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("生产者已经准备就绪");
+                    try
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            channel.ConfirmSelect();
+
+                            string message = $"Run消息{i}";
+                            byte[] body = Encoding.UTF8.GetBytes(message);
+                            IBasicProperties basicProperties = channel.CreateBasicProperties();
+                            basicProperties.Persistent = true;  // 持久化，就算MQ宕机，数据也会保留，不会丢失。
+                            channel.BasicPublish(exchange: exchangeName,
+                                                 routingKey: string.Empty,
+                                                 basicProperties: basicProperties,
+                                                 body: body);
+
+                            if (channel.WaitForConfirms())  // 如果一个或多个消息都发送成功
+                            {
+                                Console.WriteLine($"{message}发送成功");
+                            }
+                            else 
+                            {
+                                Console.WriteLine("发送失败，可以重试");
+                            }
+
+                            channel.WaitForConfirmsOrDie(); // 发送成功正常执行，发送失败，抛出异常
+                            Thread.Sleep(500);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"错误信息：{ex.Message}");
+                    }
+
+                    channel.Close();
+                }
+                connection.Close();
+            }
+        }
+
+
+        #endregion
+
     }
 }

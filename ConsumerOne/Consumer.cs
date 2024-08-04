@@ -49,6 +49,8 @@ namespace ConsumerOne
                             autoAck: true,
                             consumer: consumer);
 
+                        // var response = channel.BasicGet(queue: "OnlyProductor", autoAck: true);  //主动拉取
+
                         Console.ReadLine();
                     }
                     catch (Exception ex) 
@@ -245,7 +247,8 @@ namespace ConsumerOne
                             }
                         };
 
-                        channel.BasicConsume(queue: "ErrorMessageQueue",
+                        channel.BasicQos(0, 3, false);
+                        channel.BasicConsume(queue: "MessageTxQueue",
                             autoAck: false,   // 这个要设置为false、手动确认
                             consumer: consumer);
 
